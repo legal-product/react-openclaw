@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { NAV_ITEMS } from '../../app/navigation'
 import { useLocalStorageState } from '../../hooks/useLocalStorage'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { useThemeSync } from '../../hooks/useThemeSync'
 import { Sidebar } from '../sidebar/Sidebar'
 import { Button } from '../ui/Button'
 
@@ -15,6 +16,7 @@ export const AppShell = ({ children, footerNote }: AppShellProps) => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 900px)')
   const location = useLocation()
+  useThemeSync()
 
   const closeMobileNav = useCallback(() => setMobileOpen(false), [])
 
