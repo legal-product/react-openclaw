@@ -38,6 +38,17 @@ const USERS_ICON = (
   </svg>
 )
 
+const ANALYTICS_ICON = (
+  <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
+    <path d="M3 3v18h18" />
+    <path d="M7 14l4-4 3 3 5-7" />
+    <circle cx="7" cy="14" r="1" />
+    <circle cx="11" cy="10" r="1" />
+    <circle cx="14" cy="13" r="1" />
+    <circle cx="19" cy="6" r="1" />
+  </svg>
+)
+
 const SALES_ICON = (
   <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
     <path d="M4 19h16" />
@@ -58,6 +69,7 @@ export const NAV_ITEMS: NavItemConfig[] = [
   { label: 'Home', path: '/', icon: HOME_ICON },
   { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
   { label: 'Users', path: '/users', icon: USERS_ICON },
+  { label: 'Analytics', path: '/analytics', icon: ANALYTICS_ICON },
   { label: 'Sales', path: '/sales', icon: SALES_ICON },
   { label: 'Settings', path: '/settings', icon: SETTINGS_ICON },
 ]

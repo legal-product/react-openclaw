@@ -1154,3 +1154,111 @@ textarea {
     text-align: left;
   }
 }
+
+.analytics-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.analytics-page__hero,
+.analytics-page__eyebrow,
+.analytics-page__hero-meta {
+  display: flex;
+}
+
+.analytics-page__hero {
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.analytics-page__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.analytics-page__hero-meta {
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 180px;
+  text-align: right;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.analytics-card__subtitle {
+  color: var(--color-text-muted);
+  margin-top: 0.35rem;
+}
+
+.analytics-funnel,
+.analytics-release {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.analytics-funnel li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.analytics-funnel__step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(76, 29, 149, 0.1);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.analytics-funnel__change {
+  font-weight: 600;
+}
+
+.analytics-release li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.75rem;
+}
+
+.analytics-release__status {
+  align-self: flex-start;
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  background: rgba(14, 165, 233, 0.15);
+  color: #0369a1;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .analytics-page__hero-meta {
+    text-align: left;
+  }
+
+  .analytics-release li {
+    flex-direction: column;
+  }
+}
