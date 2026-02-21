@@ -10,6 +10,7 @@ A responsive dashboard built with React + TypeScript + React Router showcasing a
 - **Settings Panel**: Validated form (display name, email, theme toggle) with dirty detection, disabled save until valid, success toast, and persisted preferences (including document theme sync).
 - **Reusable UI kit**: Buttons, cards, inputs, modal/drawer, toast system, stat cards, chart cards, debounced hook, theme/localStorage hooks.
 - **Testing**: Vitest + React Testing Library covers sidebar persistence, dashboard KPIs, product filtering & retry flows, and settings validation.
+- **Accessible Navigation**: Sidebar items expose `aria-current="page"`, focus-visible affordances, and persisted collapse state to keep keyboard + assistive tech flows reliable.
 - **Tooling**: ESLint (flat config), Prettier, TypeScript strictness via Vite, route-level code splitting, and npm scripts for CI flows.
 
 ## Getting Started

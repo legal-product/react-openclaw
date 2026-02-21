@@ -70,7 +70,7 @@ const HomePage = () => {
       <Card className="welcome-card">
         <div>
           <p className="welcome-card__eyebrow">Dashboard</p>
-          <h2>Welcome back, Alex</h2>
+          <h2>Welcome back, Alex AI</h2>
           <p>{todayLabel}</p>
         </div>
         <Link className="btn btn--primary" to="/products">
