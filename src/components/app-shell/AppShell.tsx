@@ -7,7 +7,7 @@ import { useThemeSync } from '../../hooks/useThemeSync'
 import { Sidebar } from '../sidebar/Sidebar'
 import { Button } from '../ui/Button'
 
-const SIDEBAR_KEY = 'alexai:sidebar-collapsed'
+const SIDEBAR_KEY = 'newton:sidebar-collapsed'
 
 type AppShellProps = PropsWithChildren<{ footerNote?: string }>
 
@@ -24,7 +24,7 @@ export const AppShell = ({ children, footerNote }: AppShellProps) => {
 
   const title = useMemo(() => {
     const active = NAV_ITEMS.find((item) => item.path === location.pathname)
-    return active?.label ?? 'Alex AI'
+    return active?.label ?? 'Newton'
   }, [location.pathname])
 
   return (
