@@ -13,10 +13,12 @@ const mockProducts = [
 
 describe('ProductsPage', () => {
   const getProducts = api.getProducts as unknown as vi.Mock
+  const getProductById = api.getProductById as unknown as vi.Mock
 
   beforeEach(() => {
     vi.clearAllMocks()
     getProducts.mockResolvedValue(mockProducts)
+    getProductById.mockResolvedValue(mockProducts[0])
   })
 
   it('filters products via search', async () => {
@@ -45,4 +47,24 @@ describe('ProductsPage', () => {
     await screen.findByText('Atlas Ops')
     expect(getProducts).toHaveBeenCalledTimes(2)
   })
+  it('recovers from details fetch failure', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(<ProductsPage />)
+
+    await screen.findByText('Atlas Ops')
+
+    getProductById.mockRejectedValueOnce(new Error('detail boom')).mockResolvedValueOnce(
+      mockProducts[0],
+    )
+
+    await user.click(screen.getAllByRole('button', { name: 'View details' })[0])
+
+    await screen.findByText('detail boom')
+
+    await user.click(screen.getByRole('button', { name: 'Retry' }))
+
+    expect(await screen.findByText('$1/month')).toBeInTheDocument()
+    expect(getProductById).toHaveBeenCalledTimes(2)
+  })
+
 })
