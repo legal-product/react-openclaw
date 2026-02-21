@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from '../../components/ui/Card'
 import { ChartCard } from '../../components/ui/ChartCard'
 import { StatCard } from '../../components/ui/StatCard'
 import { Skeleton } from '../../components/ui/Skeleton'
+import { useToast } from '../../components/ui/ToastContext'
 import type { DashboardSnapshot } from './data'
 import { fetchDashboardSnapshot } from './data'
 
@@ -22,9 +23,12 @@ const parseValueToNumber = (value: string) => {
 }
 
 const HomePage = () => {
+  const { pushToast } = useToast()
   const [snapshot, setSnapshot] = useState<DashboardSnapshot | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
 
   const loadSnapshot = useCallback(async () => {
     setStatus('loading')
@@ -39,12 +43,53 @@ const HomePage = () => {
     }
   }, [])
 
+  const closeAccountMenu = useCallback(() => setMenuOpen(false), [])
+
+  const toggleAccountMenu = useCallback(() => {
+    setMenuOpen((prev) => !prev)
+  }, [])
+
+  const handleLogout = useCallback(() => {
+    closeAccountMenu()
+    pushToast({ message: 'You have been logged out', type: 'success' })
+  }, [closeAccountMenu, pushToast])
+
+  const handleMenuNavigation = useCallback(() => {
+    closeAccountMenu()
+  }, [closeAccountMenu])
+
   useEffect(() => {
     const timer = window.setTimeout(() => {
       void loadSnapshot()
     }, 0)
     return () => window.clearTimeout(timer)
   }, [loadSnapshot])
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return
+    }
+
+    const handleClick = (event: MouseEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) {
+        closeAccountMenu()
+      }
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeAccountMenu()
+      }
+    }
+
+    document.addEventListener('click', handleClick)
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('click', handleClick)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [closeAccountMenu, menuOpen])
 
   const todayLabel = formatDate(new Date())
   const isEmpty = status === 'ready' && snapshot === null
@@ -67,6 +112,50 @@ const HomePage = () => {
 
   return (
     <section className="dashboard">
+      <div className="dashboard-actions">
+        <div className="user-menu" ref={menuRef}>
+          <button
+            type="button"
+            className="user-menu__trigger"
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            aria-controls="account-menu"
+            onClick={toggleAccountMenu}
+          >
+            <span className="user-menu__avatar" aria-hidden="true">
+              N
+            </span>
+            <span className="user-menu__details">
+              <strong>Newton</strong>
+              <small>Administrator</small>
+            </span>
+            <span className="user-menu__chevron" aria-hidden="true">
+              ▾
+            </span>
+          </button>
+          {menuOpen ? (
+            <div id="account-menu" className="user-menu__dropdown" role="menu" aria-label="Account menu">
+              <Link
+                to="/settings"
+                className="user-menu__item"
+                role="menuitem"
+                onClick={handleMenuNavigation}
+              >
+                Account settings
+              </Link>
+              <button
+                type="button"
+                className="user-menu__item user-menu__item--danger"
+                role="menuitem"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
+
       <Card className="welcome-card">
         <div>
           <p className="welcome-card__eyebrow">Dashboard</p>

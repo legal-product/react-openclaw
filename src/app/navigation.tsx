@@ -29,6 +29,15 @@ const PRODUCTS_ICON = (
   </svg>
 )
 
+const SALES_ICON = (
+  <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
+    <path d="M4 19h16" />
+    <rect x="6" y="11" width="3" height="5" rx="1" />
+    <rect x="10.5" y="7" width="3" height="9" rx="1" />
+    <rect x="15" y="4" width="3" height="12" rx="1" />
+  </svg>
+)
+
 const SETTINGS_ICON = (
   <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
     <circle cx="12" cy="12" r="3" />

@@ -1,126 +1,155 @@
 import { Card } from '../../components/ui/Card'
 import { StatCard } from '../../components/ui/StatCard'
 
-const kpis = [
+const SALES_KPIS = [
   {
-    title: 'Quarterly revenue',
+    id: 'open-pipeline',
+    title: 'Open pipeline',
     value: '$4.2M',
-    helperText: 'Goal: $4.8M',
-    trend: { label: '+12% vs Q2', direction: 'up' as const },
-    icon: '💰',
-  },
-  {
-    title: 'Win rate',
-    value: '38%',
-    helperText: 'Top quartile benchmark: 35%',
-    trend: { label: '+3 pts', direction: 'up' as const },
-    icon: '🥇',
-  },
-  {
-    title: 'Average deal size',
-    value: '$86k',
-    helperText: 'Mid-market focus',
-    trend: { label: 'flat week-over-week', direction: 'neutral' as const },
+    helperText: 'Next 90 days',
     icon: '📈',
+    trend: { label: '+12% vs last qtr', direction: 'up' as const },
   },
   {
-    title: 'Forecast coverage',
-    value: '3.4×',
-    helperText: 'Need ≥ 3× to hit targets',
-    trend: { label: '+0.4× MoM', direction: 'up' as const },
-    icon: '🛡️',
+    id: 'booked-revenue',
+    title: 'Booked revenue',
+    value: '$2.9M',
+    helperText: '48 deals closed',
+    icon: '💼',
+    trend: { label: '+340K MoM', direction: 'up' as const },
+  },
+  {
+    id: 'conversion-rate',
+    title: 'Win rate',
+    value: '32%',
+    helperText: 'Target: 28%',
+    icon: '🎯',
+    trend: { label: '+4 pts', direction: 'up' as const },
+  },
+  {
+    id: 'sales-cycle',
+    title: 'Sales cycle',
+    value: '46 days',
+    helperText: 'Down from 53d',
+    icon: '⏱️',
+    trend: { label: '-7 days', direction: 'down' as const },
   },
 ]
 
-const pipelineStages = [
-  { stage: 'Discovery', detail: '38 active deals · Avg 12 days in stage', status: '+6 net new this week' },
-  { stage: 'Evaluation', detail: '24 deals · 51% conversion probability', status: 'Shorter cycles after new playbook' },
-  { stage: 'Negotiation', detail: '11 deals · $1.3M weighted', status: '3 deals blocked on security review' },
-  { stage: 'Closing', detail: '5 commits · $740k potential upside', status: '2 closes targeted before Friday' },
+const PIPELINE_STAGES = [
+  { id: 'prospecting', label: 'Prospecting', value: '$1.1M', progress: 62, deals: 48 },
+  { id: 'demo', label: 'Discovery / Demo', value: '$980K', progress: 54, deals: 35 },
+  { id: 'proposal', label: 'Proposal', value: '$1.4M', progress: 73, deals: 22 },
+  { id: 'contract', label: 'Contracting', value: '$720K', progress: 66, deals: 12 },
 ]
 
-const leaderboard = [
-  { rep: 'Mara Rich', metric: '$910k closed', delta: '+$140k WoW' },
-  { rep: 'Ayo Pierre', metric: '$780k closed', delta: '+$95k WoW' },
-  { rep: 'Keiko Lin', metric: '$650k closed', delta: '+$80k WoW' },
+const LEADERBOARD = [
+  { id: 'vera', name: 'Vera Hollis', amount: '$920K', status: '+28% quota' },
+  { id: 'samuel', name: 'Samuel Ortiz', amount: '$710K', status: '+11% quota' },
+  { id: 'mina', name: 'Mina Patel', amount: '$640K', status: 'On target' },
 ]
 
-const focusAreas = [
-  'Launch Q4 expansion playbook for enterprise accounts',
-  'Stand up weekly pipeline review with RevOps + Sales Ops',
-  'Accelerate security reviews with pre-approved questionnaire',
+const SALES_HIGHLIGHTS = [
+  {
+    id: 'enterprise-boost',
+    label: 'Enterprise momentum',
+    detail: 'Closed 3 lighthouse accounts in EMEA with multi-year terms.',
+    status: 'Ahead',
+  },
+  {
+    id: 'plg-handsoff',
+    label: 'Product-led funnel',
+    detail: 'Self-serve upgrades generated $240K this month (+35% MoM).',
+    status: 'Scaling',
+  },
+  {
+    id: 'risk-watch',
+    label: 'Risk watchlist',
+    detail: '3 renewals flagged for exec visibility — playbooks in motion.',
+    status: 'Monitoring',
+  },
 ]
 
 const SalesPage = () => {
+  const updatedLabel = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date())
+
   return (
     <section className="sales-page">
-      <Card className="sales-hero">
+      <Card className="sales-page__hero">
         <div>
-          <p className="sales-hero__eyebrow">Revenue operations</p>
+          <p className="sales-page__eyebrow">Revenue team</p>
           <h2>Sales performance cockpit</h2>
-          <p className="sales-hero__subtitle">
-            Track throughput, momentum, and the KPIs that keep quarterly targets on pace.
-          </p>
+          <p>Pulse on pipeline strength, execution velocity, and quarterly goals.</p>
         </div>
-        <div className="sales-hero__actions">
-          <button className="btn btn--primary">Create forecast snapshot</button>
-          <button className="btn btn--outline">Open pipeline</button>
+        <div className="sales-page__hero-meta">
+          <span>Quarter target</span>
+          <strong>$8.0M</strong>
+          <small>Updated {updatedLabel}</small>
         </div>
       </Card>
 
       <div className="stat-grid">
-        {kpis.map((kpi) => (
+        {SALES_KPIS.map((stat) => (
           <StatCard
-            key={kpi.title}
-            title={kpi.title}
-            value={kpi.value}
-            helperText={kpi.helperText}
-            trend={kpi.trend}
-            icon={kpi.icon}
+            key={stat.id}
+            title={stat.title}
+            value={stat.value}
+            helperText={stat.helperText}
+            icon={stat.icon}
+            trend={stat.trend}
           />
         ))}
       </div>
 
       <div className="sales-grid">
         <Card className="sales-card">
-          <h3>Pipeline momentum</h3>
-          <p className="sales-card__subhead">Stage health over the last 14 days</p>
-          <ul className="sales-list">
-            {pipelineStages.map((stage) => (
-              <li key={stage.stage}>
-                <div>
-                  <strong>{stage.stage}</strong>
-                  <p>{stage.detail}</p>
+          <h3 style={{ marginTop: 0 }}>Pipeline health</h3>
+          <p className="sales-card__subtitle">Active opportunities for the next 90 days</p>
+          <ul className="sales-pipeline">
+            {PIPELINE_STAGES.map((stage) => (
+              <li key={stage.id}>
+                <div className="sales-pipeline__header">
+                  <strong>{stage.label}</strong>
+                  <span>{stage.value}</span>
                 </div>
-                <span>{stage.status}</span>
+                <div className="sales-pipeline__bar" aria-hidden>
+                  <span style={{ width: `${stage.progress}%` }} />
+                </div>
+                <small>{stage.deals} deals in stage</small>
               </li>
             ))}
           </ul>
         </Card>
 
         <Card className="sales-card">
-          <h3>Team leaderboard</h3>
-          <p className="sales-card__subhead">Top performers this sprint</p>
-          <ul className="sales-list">
-            {leaderboard.map((entry) => (
-              <li key={entry.rep}>
+          <h3 style={{ marginTop: 0 }}>Leaderboard</h3>
+          <p className="sales-card__subtitle">Top performers by closed-won revenue</p>
+          <ol className="sales-leaderboard">
+            {LEADERBOARD.map((rep, index) => (
+              <li key={rep.id}>
+                <span className="sales-leaderboard__rank">{index + 1}</span>
                 <div>
-                  <strong>{entry.rep}</strong>
-                  <p>{entry.metric}</p>
+                  <strong>{rep.name}</strong>
+                  <p>{rep.status}</p>
                 </div>
-                <span>{entry.delta}</span>
+                <span className="sales-leaderboard__amount">{rep.amount}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </Card>
       </div>
 
       <Card className="sales-card">
-        <h3>Focus areas</h3>
-        <p className="sales-card__subhead">Weekly priorities aligned with GTM</p>
-        <ul className="sales-focus-list">
-          {focusAreas.map((item) => (
-            <li key={item}>{item}</li>
+        <h3 style={{ marginTop: 0 }}>Quarterly highlights</h3>
+        <ul className="sales-highlights">
+          {SALES_HIGHLIGHTS.map((item) => (
+            <li key={item.id}>
+              <div>
+                <span className="sales-highlight__label">{item.label}</span>
+                <p>{item.detail}</p>
+              </div>
+              <span className="sales-highlight__status">{item.status}</span>
+            </li>
           ))}
         </ul>
       </Card>
