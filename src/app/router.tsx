@@ -6,6 +6,7 @@ const HomePage = lazy(() => import('../features/home/HomePage'))
 const ProductsPage = lazy(() => import('../features/products/ProductsPage'))
 const SalesPage = lazy(() => import('../features/sales/SalesPage'))
 const SettingsPage = lazy(() => import('../features/settings/SettingsPage'))
+const SalesPage = lazy(() => import('../features/sales/SalesPage'))
 const NotFoundPage = lazy(() => import('../features/not-found/NotFoundPage'))
 
 const router = createBrowserRouter([
