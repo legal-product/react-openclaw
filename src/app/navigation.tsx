@@ -48,6 +48,6 @@ const SETTINGS_ICON = (
 export const NAV_ITEMS: NavItemConfig[] = [
   { label: 'Home', path: '/', icon: HOME_ICON },
   { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
-  { label: 'Sales landing', path: '/sales', icon: SALES_ICON },
+  { label: 'Sales', path: '/sales', icon: SALES_ICON },
   { label: 'Settings', path: '/settings', icon: SETTINGS_ICON },
 ]
