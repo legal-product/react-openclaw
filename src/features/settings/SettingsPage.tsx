@@ -12,7 +12,7 @@ type SettingsForm = {
   theme: 'light' | 'dark'
 }
 
-const SETTINGS_KEY = 'alexai:settings'
+const SETTINGS_KEY = 'newton:settings'
 const DEFAULT_SETTINGS: SettingsForm = {
   displayName: '',
   email: '',

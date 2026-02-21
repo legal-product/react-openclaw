@@ -23,7 +23,7 @@ describe('AppShell navigation', () => {
     const collapseToggle = screen.getByRole('button', { name: 'Collapse sidebar' })
     await user.click(collapseToggle)
 
-    expect(window.localStorage.getItem('alexai:sidebar-collapsed')).toBe('true')
+    expect(window.localStorage.getItem('newton:sidebar-collapsed')).toBe('true')
 
     unmount()
 

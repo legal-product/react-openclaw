@@ -24,7 +24,7 @@ export const Sidebar = ({
         aria-label="Primary"
       >
         <div className="sidebar__header">
-          {!collapsed ? <h2 className="sidebar__brand">Alex AI</h2> : <span aria-hidden>⚡️</span>}
+          {!collapsed ? <h2 className="sidebar__brand">Newton</h2> : <span aria-hidden>⚡️</span>}
           <button
             type="button"
             className="sidebar__toggle"

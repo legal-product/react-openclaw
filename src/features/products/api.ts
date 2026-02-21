@@ -5,7 +5,7 @@ const MOCK_PRODUCTS: Product[] = [
   {
     id: '1',
     name: 'Cortex Insight',
-    description: 'Daily intelligence brief powered by Alex AI signal routing.',
+    description: 'Daily intelligence brief powered by Newton signal routing.',
     price: 29,
     inStock: true,
   },

@@ -1,4 +1,4 @@
-# Alex AI Dashboard
+# Newton Dashboard
 
 A responsive dashboard built with React + TypeScript + React Router showcasing a collapsible sidebar layout, real-time style KPIs, mock product data tooling, and persistable user settings.
 

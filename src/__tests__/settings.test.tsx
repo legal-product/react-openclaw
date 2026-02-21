@@ -23,15 +23,15 @@ describe('SettingsPage', () => {
     expect(saveButton).toBeDisabled()
 
     await user.clear(screen.getByLabelText('Display name'))
-    await user.type(screen.getByLabelText('Display name'), 'Alex AI')
+    await user.type(screen.getByLabelText('Display name'), 'Newton')
     await user.clear(screen.getByLabelText('Email'))
-    await user.type(screen.getByLabelText('Email'), 'alex@example.com')
+    await user.type(screen.getByLabelText('Email'), 'newton@example.com')
 
     expect(saveButton).toBeEnabled()
 
     await user.click(saveButton)
 
     expect(await screen.findByText('Settings saved')).toBeInTheDocument()
-    expect(window.localStorage.getItem('alexai:settings')).toContain('Alex AI')
+    expect(window.localStorage.getItem('newton:settings')).toContain('Newton')
   })
 })

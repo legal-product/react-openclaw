@@ -1,6 +1,6 @@
 export type ThemeChoice = 'light' | 'dark'
 
-const SETTINGS_KEY = 'alexai:settings'
+const SETTINGS_KEY = 'newton:settings'
 const FALLBACK: ThemeChoice = 'light'
 const isBrowser = typeof window !== 'undefined'
 
