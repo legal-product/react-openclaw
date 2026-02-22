@@ -13,6 +13,8 @@ const LandingPage = () => {
     event.preventDefault()
   }
 
+  const activeIndex = CAPABILITIES.findIndex((item) => item.highlight) !== -1 ? CAPABILITIES.findIndex((item) => item.highlight) : 0
+
   return (
     <div className="landing">
       <header className="landing__nav">
@@ -34,25 +36,43 @@ const LandingPage = () => {
             <span className="landing__headline-ghost">developer</span>
           </div>
           <div className="landing__capabilities" aria-label="Newton capabilities">
-            {CAPABILITIES.map((item, index) => (
-              <div
-                key={item.id}
-                className={`landing__capability ${item.highlight ? 'landing__capability--highlight' : ''}`}
-                style={{
-                  opacity: item.highlight ? 1 : 0.5 - index * 0.05,
-                }}
-              >
-                {item.highlight ? (
-                  <span className="landing__capability-icon" aria-hidden>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M5 12h4l3 5 3-10 4 5" />
-                      <path d="M5 5v14" />
-                    </svg>
-                  </span>
-                ) : null}
-                {item.label}
-              </div>
-            ))}
+            <div className="landing__capabilities-mask" aria-hidden />
+            <div className="landing__capabilities-track">
+              {CAPABILITIES.map((item, index) => {
+                const offset = index - activeIndex
+                const depth = Math.abs(offset)
+                const scale = Math.max(0.78, 1 - depth * 0.08)
+                const translateY = offset * -10
+                const opacity = Math.max(0.15, 1 - depth * 0.22)
+                const blur = depth * 1.2
+                const height = offset === 0 ? 66 : 54
+                const glow = offset === 0
+                return (
+                  <div
+                    key={item.id}
+                    className={`landing__capability ${item.highlight ? 'landing__capability--highlight' : ''}`}
+                    style={{
+                      transform: `translateY(${translateY}px) scale(${scale})`,
+                      opacity,
+                      filter: `blur(${blur}px)`,
+                      height: `${height}px`,
+                    }}
+                    aria-hidden={!item.highlight}
+                  >
+                    {glow ? <span className="landing__capability-glow" aria-hidden /> : null}
+                    {item.highlight ? (
+                      <span className="landing__capability-icon" aria-hidden>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M5 12h4l3 5 3-10 4 5" />
+                          <path d="M5 5v14" />
+                        </svg>
+                      </span>
+                    ) : null}
+                    {item.label}
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
 
