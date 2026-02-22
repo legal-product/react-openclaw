@@ -9,6 +9,7 @@ import { applyDocumentTheme } from '../../lib/theme'
 type SettingsForm = {
   displayName: string
   email: string
+  address: string
   theme: 'light' | 'dark'
 }
 
@@ -16,6 +17,7 @@ const SETTINGS_KEY = 'newton:settings'
 const DEFAULT_SETTINGS: SettingsForm = {
   displayName: '',
   email: '',
+  address: '',
   theme: 'light',
 }
 
@@ -27,10 +29,16 @@ const SettingsPage = () => {
     SETTINGS_KEY,
     DEFAULT_SETTINGS,
   )
-  const [formState, setFormState] = useState<SettingsForm>(savedSettings)
+  const [formState, setFormState] = useState<SettingsForm>({
+    ...DEFAULT_SETTINGS,
+    ...savedSettings,
+  })
 
   useEffect(() => {
-    setFormState(savedSettings)
+    setFormState({
+      ...DEFAULT_SETTINGS,
+      ...savedSettings,
+    })
   }, [savedSettings])
 
   useEffect(() => {
@@ -41,6 +49,7 @@ const SettingsPage = () => {
     const result: Record<keyof SettingsForm, string | null> = {
       displayName: null,
       email: null,
+      address: null,
       theme: null,
     }
 
@@ -49,6 +58,9 @@ const SettingsPage = () => {
     }
     if (!emailRegex.test(formState.email.trim())) {
       result.email = 'Enter a valid email address'
+    }
+    if (formState.address.trim().length < 5) {
+      result.address = 'Enter a full mailing address'
     }
 
     return result
@@ -59,7 +71,7 @@ const SettingsPage = () => {
     [formState, savedSettings],
   )
 
-  const isValid = !errors.displayName && !errors.email
+  const isValid = !errors.displayName && !errors.email && !errors.address
 
   const updateField = <K extends keyof SettingsForm>(key: K, value: SettingsForm[K]) => {
     setFormState((prev) => ({ ...prev, [key]: value }))
@@ -94,6 +106,14 @@ const SettingsPage = () => {
         onChange={(event) => updateField('email', event.currentTarget.value)}
         error={errors.email ?? undefined}
         placeholder="ada@example.com"
+      />
+      <Input
+        label="Mailing address"
+        name="address"
+        value={formState.address}
+        onChange={(event) => updateField('address', event.currentTarget.value)}
+        error={errors.address ?? undefined}
+        placeholder="742 Evergreen Terrace"
       />
       <div className="theme-toggle">
         <label htmlFor="theme-select">Theme</label>
