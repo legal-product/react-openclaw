@@ -74,12 +74,20 @@ const SETTINGS_ICON = (
   </svg>
 )
 
+/* keep icons referenced while routes are temporarily hidden */
+void HOME_ICON
+void LANDING_ICON
+void PRODUCTS_ICON
+void USERS_ICON
+void ANALYTICS_ICON
+void SALES_ICON
+
 export const NAV_ITEMS: NavItemConfig[] = [
-  { label: 'Home', path: '/', icon: HOME_ICON },
-  { label: 'Landing', path: '/landing', icon: LANDING_ICON },
-  { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
-  { label: 'Users', path: '/users', icon: USERS_ICON },
-  { label: 'Analytics', path: '/analytics', icon: ANALYTICS_ICON },
-  { label: 'Sales', path: '/sales', icon: SALES_ICON },
+  // { label: 'Home', path: '/', icon: HOME_ICON },
+  // { label: 'Landing', path: '/landing', icon: LANDING_ICON },
+  // { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
+  // { label: 'Users', path: '/users', icon: USERS_ICON },
+  // { label: 'Analytics', path: '/analytics', icon: ANALYTICS_ICON },
+  // { label: 'Sales', path: '/sales', icon: SALES_ICON },
   { label: 'Settings', path: '/settings', icon: SETTINGS_ICON },
 ]
