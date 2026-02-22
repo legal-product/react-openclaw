@@ -16,7 +16,7 @@ const LandingPage = () => {
   const initialIndex = CAPABILITIES.findIndex((item) => item.highlight)
   const [activeIndex, setActiveIndex] = useState(initialIndex !== -1 ? initialIndex : 0)
   const carouselRef = useRef<HTMLDivElement | null>(null)
-  const ITEM_HEIGHT = 72
+  const ITEM_HEIGHT = 84
 
   useEffect(() => {
     if (!carouselRef.current) return
@@ -66,10 +66,10 @@ const LandingPage = () => {
               {CAPABILITIES.map((item, index) => {
                 const depth = Math.abs(index - activeIndex)
                 const isActive = index === activeIndex
-                const scale = isActive ? 1 : Math.max(0.82, 1 - depth * 0.08)
+                const scale = isActive ? 1.02 : Math.max(0.85, 1 - depth * 0.07)
                 const opacity = isActive ? 1 : Math.max(0.25, 1 - depth * 0.25)
-                const blur = isActive ? 0 : depth * 1.2
-                const height = isActive ? 74 : 60
+                const blur = isActive ? 0 : depth * 1.1
+                const height = isActive ? 82 : 66
                 const zIndex = CAPABILITIES.length - depth
                 return (
                   <button
