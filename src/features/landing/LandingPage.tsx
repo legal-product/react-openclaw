@@ -1,4 +1,4 @@
-import { FormEvent } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 
 const CAPABILITIES = [
   { id: 'actions', label: 'Triages incidents' },
@@ -13,7 +13,31 @@ const LandingPage = () => {
     event.preventDefault()
   }
 
-  const activeIndex = CAPABILITIES.findIndex((item) => item.highlight) !== -1 ? CAPABILITIES.findIndex((item) => item.highlight) : 0
+  const initialIndex = CAPABILITIES.findIndex((item) => item.highlight)
+  const [activeIndex, setActiveIndex] = useState(initialIndex !== -1 ? initialIndex : 0)
+  const carouselRef = useRef<HTMLDivElement | null>(null)
+  const ITEM_HEIGHT = 72
+
+  useEffect(() => {
+    if (!carouselRef.current) return
+    carouselRef.current.scrollTop = activeIndex * ITEM_HEIGHT
+  }, [activeIndex])
+
+  const handleCarouselScroll = () => {
+    if (!carouselRef.current) return
+    const nextIndex = Math.round(carouselRef.current.scrollTop / ITEM_HEIGHT)
+    const clamped = Math.max(0, Math.min(CAPABILITIES.length - 1, nextIndex))
+    if (clamped !== activeIndex) {
+      setActiveIndex(clamped)
+    }
+  }
+
+  const setActive = (index: number) => {
+    setActiveIndex(index)
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({ top: index * ITEM_HEIGHT, behavior: 'smooth' })
+    }
+  }
 
   return (
     <div className="landing">
@@ -36,31 +60,33 @@ const LandingPage = () => {
             <span className="landing__headline-ghost">developer</span>
           </div>
           <div className="landing__capabilities" aria-label="Newton capabilities">
-            <div className="landing__capabilities-mask" aria-hidden />
-            <div className="landing__capabilities-track">
+            <div className="landing__capabilities-mask landing__capabilities-mask--top" aria-hidden />
+            <div className="landing__capabilities-mask landing__capabilities-mask--bottom" aria-hidden />
+            <div className="landing__capabilities-track" ref={carouselRef} onScroll={handleCarouselScroll}>
               {CAPABILITIES.map((item, index) => {
-                const offset = index - activeIndex
-                const depth = Math.abs(offset)
-                const scale = Math.max(0.78, 1 - depth * 0.08)
-                const translateY = offset * -10
-                const opacity = Math.max(0.15, 1 - depth * 0.22)
-                const blur = depth * 1.2
-                const height = offset === 0 ? 66 : 54
-                const glow = offset === 0
+                const depth = Math.abs(index - activeIndex)
+                const isActive = index === activeIndex
+                const scale = isActive ? 1 : Math.max(0.82, 1 - depth * 0.08)
+                const opacity = isActive ? 1 : Math.max(0.25, 1 - depth * 0.25)
+                const blur = isActive ? 0 : depth * 1.2
+                const height = isActive ? 74 : 60
+                const zIndex = CAPABILITIES.length - depth
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={item.id}
-                    className={`landing__capability ${item.highlight ? 'landing__capability--highlight' : ''}`}
+                    className={`landing__capability ${isActive ? 'landing__capability--active' : ''}`}
                     style={{
-                      transform: `translateY(${translateY}px) scale(${scale})`,
+                      transform: `scale(${scale})`,
                       opacity,
                       filter: `blur(${blur}px)`,
                       height: `${height}px`,
+                      zIndex,
                     }}
-                    aria-hidden={!item.highlight}
+                    onClick={() => setActive(index)}
                   >
-                    {glow ? <span className="landing__capability-glow" aria-hidden /> : null}
-                    {item.highlight ? (
+                    {isActive ? <span className="landing__capability-glow" aria-hidden /> : null}
+                    {isActive ? (
                       <span className="landing__capability-icon" aria-hidden>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                           <path d="M5 12h4l3 5 3-10 4 5" />
@@ -68,8 +94,8 @@ const LandingPage = () => {
                         </svg>
                       </span>
                     ) : null}
-                    {item.label}
-                  </div>
+                    <span>{item.label}</span>
+                  </button>
                 )
               })}
             </div>
