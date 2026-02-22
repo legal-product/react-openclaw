@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import AppLayout from './layout/AppLayout'
 
 const HomePage = lazy(() => import('../features/home/HomePage'))
+const LandingPage = lazy(() => import('../features/landing/LandingPage'))
 const ProductsPage = lazy(() => import('../features/products/ProductsPage'))
 const UsersPage = lazy(() => import('../features/users/UsersPage'))
 const AnalyticsPage = lazy(() => import('../features/analytics/AnalyticsPage'))
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: 'landing', element: <LandingPage /> },
       { path: 'products', element: <ProductsPage /> },
       { path: 'users', element: <UsersPage /> },
       { path: 'analytics', element: <AnalyticsPage /> },
