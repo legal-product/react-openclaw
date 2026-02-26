@@ -21,6 +21,15 @@ const HOME_ICON = (
   </svg>
 )
 
+const LANDING_ICON = (
+  <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
+    <path d="M3 8h18" />
+    <path d="M5 6l7-3 7 3" />
+    <rect x="4" y="8" width="16" height="12" rx="2" />
+    <path d="M9 13h6" />
+  </svg>
+)
+
 const PRODUCTS_ICON = (
   <svg {...iconProps} viewBox="0 0 24 24" aria-hidden>
     <rect x="3" y="4" width="7" height="16" rx="1.5" />
@@ -65,11 +74,20 @@ const SETTINGS_ICON = (
   </svg>
 )
 
+/* keep icons referenced while routes are temporarily hidden */
+void HOME_ICON
+void LANDING_ICON
+void PRODUCTS_ICON
+void USERS_ICON
+void ANALYTICS_ICON
+void SALES_ICON
+
 export const NAV_ITEMS: NavItemConfig[] = [
-  { label: 'Home', path: '/', icon: HOME_ICON },
-  { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
-  { label: 'Users', path: '/users', icon: USERS_ICON },
-  { label: 'Analytics', path: '/analytics', icon: ANALYTICS_ICON },
-  { label: 'Sales', path: '/sales', icon: SALES_ICON },
+  // { label: 'Home', path: '/', icon: HOME_ICON },
+  // { label: 'Landing', path: '/landing', icon: LANDING_ICON },
+  // { label: 'Products', path: '/products', icon: PRODUCTS_ICON },
+  // { label: 'Users', path: '/users', icon: USERS_ICON },
+  // { label: 'Analytics', path: '/analytics', icon: ANALYTICS_ICON },
+  // { label: 'Sales', path: '/sales', icon: SALES_ICON },
   { label: 'Settings', path: '/settings', icon: SETTINGS_ICON },
 ]
